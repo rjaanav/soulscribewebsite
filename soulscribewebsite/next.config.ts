@@ -5,8 +5,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   output: 'export',
-  basePath: '/<repository-name>', // Replace <repository-name> with your GitHub repository name
-  assetPrefix: '/<repository-name>/', // Ensures assets use the correct path
+  basePath: '/soulscribewebsite', // Replace <repository-name> with your GitHub repository name
+  assetPrefix: '/soulscribewebsite', // Ensures assets use the correct path
 };
 
 module.exports = nextConfig;
