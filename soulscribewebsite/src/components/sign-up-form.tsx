@@ -11,19 +11,44 @@ export function SignUpForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setIsSubmitting(true)
-
-    // Here you would typically send the form data to your backend
-    // For now, we'll just simulate a submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    setIsSubmitting(false)
-    toast({
-      title: "Success!",
-      description: "You've been added to our waitlist. We'll be in touch soon!",
-    })
-  }
+    event.preventDefault();
+    setIsSubmitting(true);
+  
+    const formData = new FormData(event.currentTarget);
+    const data = {
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      source: formData.get("source"),
+    };
+  
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbzK3OaHMFEDTRLMngiAxH6dZ-g2jIH5OZyxyK4zeRT5ks1z_TykG5WB6ffszQ-GwZHCcw/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await response.json();
+      if (result.status === "success") {
+        toast({
+          title: "Success!",
+          description: "Your information has been saved successfully!",
+        });
+      } else {
+        throw new Error("Failed to submit");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was an error submitting your information.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
 
   return (
     <section id="signup" className="container mx-auto px-4 py-20">
