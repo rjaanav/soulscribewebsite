@@ -1,3 +1,5 @@
+"use client"
+
 import Image from 'next/image'
 import { HeroSection } from '../components/hero-section'
 import { FeatureSection } from '../components/feature-section'
@@ -13,7 +15,7 @@ export default function LandingPage() {
     <div className={`min-h-screen bg-gradient-to-b from-purple-50 to-white ${seasons.variable} ${roboto.variable}`}>
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <Image src="/placeholder.svg?height=40&width=40" alt="SoulScribe Logo" width={40} height={40} />
+          <Image src="/soulscribelogo.svg?height=40&width=40" alt="SoulScribe Logo" width={40} height={40} />
           <span className="text-2xl font-bold text-purple-800 font-seasons">SoulScribe</span>
         </div>
       </header>
