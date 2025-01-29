@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "@/components/ui/use-toast"
 import { db } from './firebaseConfig'
 import { collection, addDoc } from 'firebase/firestore'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Check, Loader2 } from 'lucide-react'
 
 export function SignUpForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -37,11 +39,16 @@ export function SignUpForm() {
         formRef.current.reset()
       }
       setSource('')
+      toast({
+        title: "Success!",
+        description: "You've been added to our waitlist. We'll be in touch soon!",
+      })
     } catch (error) {
       console.error('Error saving document: ', error)
       toast({
         title: 'Error',
-        description: 'There was an error submitting your information.',
+        description: 'There was an error submitting your information. Please try again.',
+        variant: 'destructive'
       })
     } finally {
       setIsSubmitting(false)
@@ -49,60 +56,172 @@ export function SignUpForm() {
   }
 
   return (
-    <section id="signup" className="container mx-auto px-4 py-20 bg-gradient-to-b from-orange-50 to-white rounded-lg">
-      <h2 className="text-3xl font-bold text-center text-foreground mb-12">Get Early Access</h2>
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-background rounded-lg shadow-lg p-6 w-80 text-center relative">
-            <button
-              onClick={() => setShowModal(false)}
-              className="absolute top-2 right-2 text-muted-foreground hover:text-foreground focus:outline-none"
+    <section id="signup" className="container mx-auto px-4 py-20">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center space-y-4 mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-orange-500">
+            Join the Waitlist
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Be among the first to experience the future of personal journaling
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <Check className="h-5 w-5 text-orange-500" />
+                <p className="text-muted-foreground">Early access to all features</p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Check className="h-5 w-5 text-orange-500" />
+                <p className="text-muted-foreground">Exclusive beta tester benefits</p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Check className="h-5 w-5 text-orange-500" />
+                <p className="text-muted-foreground">Priority support and feedback</p>
+              </div>
+            </div>
+
+            <div className="p-6 glass rounded-2xl">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">1K+</span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground">Early Adopters</h3>
+                  <p className="text-sm text-muted-foreground">Have already joined</p>
+                </div>
+              </div>
+              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div className="h-full w-3/4 bg-orange-500 rounded-full" />
+              </div>
+              <p className="text-sm text-muted-foreground mt-2">Waitlist is 75% full</p>
+            </div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6 glass p-8 rounded-2xl">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="firstName">First Name</Label>
+                  <Input 
+                    id="firstName" 
+                    name="firstName" 
+                    required 
+                    className="glass border-0 focus:ring-2 ring-orange-500/20"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="lastName">Last Name</Label>
+                  <Input 
+                    id="lastName" 
+                    name="lastName" 
+                    required 
+                    className="glass border-0 focus:ring-2 ring-orange-500/20"
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input 
+                  id="email" 
+                  name="email" 
+                  type="email" 
+                  required 
+                  className="glass border-0 focus:ring-2 ring-orange-500/20"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input 
+                  id="phone" 
+                  name="phone" 
+                  type="tel" 
+                  required 
+                  className="glass border-0 focus:ring-2 ring-orange-500/20"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="source">How did you hear about us?</Label>
+                <Select onValueChange={setSource} value={source} required>
+                  <SelectTrigger className="glass border-0 focus:ring-2 ring-orange-500/20">
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="social">Social Media</SelectItem>
+                    <SelectItem value="friend">Friend or Family</SelectItem>
+                    <SelectItem value="search">Search Engine</SelectItem>
+                    <SelectItem value="ad">Advertisement</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Button 
+                type="submit" 
+                className="w-full bg-orange-500 text-white hover:bg-orange-600 transition-all duration-300"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <div className="flex items-center space-x-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Processing...</span>
+                  </div>
+                ) : (
+                  'Join the Waitlist'
+                )}
+              </Button>
+            </form>
+          </motion.div>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-orange-500 p-[1px] rounded-2xl"
             >
-              ✕
-            </button>
-            <h3 className="text-2xl font-bold text-accent">You're In!</h3>
-            <p className="text-muted-foreground mt-2">Thank you for signing up!</p>
-          </div>
-        </div>
-      )}
-      <form ref={formRef} onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="firstName">First Name</Label>
-            <Input id="firstName" name="firstName" required className="bg-background" />
-          </div>
-          <div>
-            <Label htmlFor="lastName">Last Name</Label>
-            <Input id="lastName" name="lastName" required className="bg-background" />
-          </div>
-        </div>
-        <div>
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" name="email" type="email" required className="bg-background" />
-        </div>
-        <div>
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input id="phone" name="phone" type="tel" required className="bg-background" />
-        </div>
-        <div>
-          <Label htmlFor="source">How did you hear about us?</Label>
-          <Select onValueChange={setSource} value={source} required>
-            <SelectTrigger className="bg-background">
-              <SelectValue placeholder="Select an option" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="social">Social Media</SelectItem>
-              <SelectItem value="friend">Friend or Family</SelectItem>
-              <SelectItem value="search">Search Engine</SelectItem>
-              <SelectItem value="ad">Advertisement</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Join the Waitlist'}
-        </Button>
-      </form>
+              <div className="bg-background rounded-2xl p-8 w-full max-w-md text-center relative">
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  ✕
+                </button>
+                <div className="mb-4">
+                  <div className="w-16 h-16 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto">
+                    <Check className="h-8 w-8 text-orange-500" />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold text-orange-500 mb-2">
+                  You're In!
+                </h3>
+                <p className="text-muted-foreground">
+                  Thank you for joining our waitlist. We'll be in touch soon with exclusive updates!
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
