@@ -1,17 +1,17 @@
 export const siteConfig = {
-  title: "SoulScribe - AI-Powered Personal Journaling App",
-  description: "Transform your thoughts into organized journals with SoulScribe's AI-powered voice journaling app. Get early access to the future of personal journaling.",
+  title: "SoulScribe - Your Digital Safe Space",
+  description: "Where your thoughts come to life. The most aesthetic journaling app for Gen Z. Available now on the App Store.",
   keywords: [
-    "AI journaling",
-    "voice journal",
-    "personal diary app",
-    "digital journaling",
-    "AI diary assistant",
-    "mood tracking",
-    "personal development",
+    "aesthetic journaling app",
+    "gen z journal app",
+    "digital diary app",
+    "mood journal",
+    "personal growth app",
     "mental wellness",
-    "thought organization",
-    "voice recognition journal"
+    "journaling for teens",
+    "safe space app",
+    "App Store journaling",
+    "modern journal app"
   ],
   openGraph: {
     type: "website",
@@ -23,14 +23,14 @@ export const siteConfig = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "SoulScribe - AI-Powered Personal Journaling"
+        alt: "SoulScribe - Your Digital Safe Space"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "SoulScribe - AI-Powered Personal Journaling App",
-    description: "Transform your thoughts into organized journals with AI-powered voice journaling.",
+    title: "SoulScribe - Your Digital Safe Space",
+    description: "Where your thoughts come to life. The most aesthetic journaling app for Gen Z.",
     images: ["/twitter-image.jpg"]
   }
 } 
