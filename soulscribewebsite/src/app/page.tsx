@@ -21,30 +21,34 @@ export default function LandingPage() {
     <div ref={containerRef} className="min-h-screen bg-black text-white overflow-hidden">
       {/* Animated gradient background */}
       <div className="fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-950/50 via-orange-900/30 to-orange-800/20" />
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full rotate-12 bg-gradient-to-br from-orange-500/20 to-orange-400/10 blur-3xl animate-pulse" />
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full -rotate-12 bg-gradient-to-br from-orange-400/20 to-orange-300/10 blur-3xl animate-pulse delay-1000" />
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-950/50 via-orange-900/30 to-orange-800/20 animate-gradient-shift" />
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full rotate-12 bg-gradient-to-br from-orange-500/30 to-orange-400/20 blur-3xl animate-pulse" />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full -rotate-12 bg-gradient-to-br from-orange-400/30 to-orange-300/20 blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-400/20 rounded-full blur-3xl animate-float-delayed" />
       </div>
 
       {/* Animated shapes */}
       <div className="fixed inset-0 -z-5 overflow-hidden">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(25)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-orange-400/20 rounded-full"
+            className="absolute w-3 h-3 bg-orange-400/30 rounded-full"
             style={{
-              left: `${(i * 7) % 100}%`,
-              top: `${(i * 5) % 100}%`,
+              left: `${(i * 4) % 100}%`,
+              top: `${(i * 3) % 100}%`,
             }}
             animate={{
-              y: [0, -100, 0],
-              opacity: [0.2, 0.5, 0.2],
-              scale: [1, 1.5, 1],
+              y: [0, -150, 0],
+              x: [0, (i % 2 ? 50 : -50), 0],
+              opacity: [0.3, 0.6, 0.3],
+              scale: [1, 1.8, 1],
             }}
             transition={{
-              duration: 3 + (i % 2),
+              duration: 4 + (i % 3),
               repeat: Infinity,
-              delay: i * 0.2,
+              delay: i * 0.15,
+              ease: "easeInOut",
             }}
           />
         ))}
@@ -56,8 +60,9 @@ export default function LandingPage() {
         className="fixed inset-0 -z-3 overflow-hidden"
       >
         <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-20 left-20 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-20 w-64 h-64 bg-orange-400/10 rounded-full blur-3xl" />
+          <div className="absolute top-20 left-20 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-orange-400/15 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-orange-300/15 rounded-full blur-3xl animate-pulse delay-500" />
         </div>
       </motion.div>
 
