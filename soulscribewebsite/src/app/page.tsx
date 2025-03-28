@@ -15,50 +15,55 @@ const ChalkText = ({ text, className }: { text: string, className: string }) => 
       transition={{ duration: 0.5 }}
       className={className}
     >
-      {text.split('').map((char, index) => (
-        <motion.span
-          key={index}
-          initial={{ 
-            opacity: 0,
-            pathLength: 0,
-            pathOffset: 1
-          }}
-          animate={{ 
-            opacity: 1,
-            pathLength: 1,
-            pathOffset: 0
-          }}
-          transition={{
-            duration: 0.2,
-            delay: index * 0.05,
-            ease: "easeInOut"
-          }}
-          className="inline-block relative"
-        >
-          <motion.span
-            className="absolute inset-0"
-            initial={{ 
-              background: "linear-gradient(to right, #ffffff, #fed7aa, #fdba74)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              opacity: 0
-            }}
-            animate={{ 
-              opacity: 1,
-              background: "linear-gradient(to right, #ffffff, #fed7aa, #fdba74)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent"
-            }}
-            transition={{
-              duration: 0.2,
-              delay: index * 0.05,
-              ease: "easeInOut"
-            }}
-          >
-            {char}
-          </motion.span>
-          <span className="opacity-0">{char}</span>
-        </motion.span>
+      {text.split(' ').map((word, wordIndex) => (
+        <span key={wordIndex} className="inline-block">
+          {word.split('').map((char, index) => (
+            <motion.span
+              key={index}
+              initial={{ 
+                opacity: 0,
+                pathLength: 0,
+                pathOffset: 1
+              }}
+              animate={{ 
+                opacity: 1,
+                pathLength: 1,
+                pathOffset: 0
+              }}
+              transition={{
+                duration: 0.2,
+                delay: (wordIndex * word.length + index) * 0.05,
+                ease: "easeInOut"
+              }}
+              className="inline-block relative"
+            >
+              <motion.span
+                className="absolute inset-0"
+                initial={{ 
+                  background: "linear-gradient(to right, #ffffff, #fed7aa, #fdba74)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  opacity: 0
+                }}
+                animate={{ 
+                  opacity: 1,
+                  background: "linear-gradient(to right, #ffffff, #fed7aa, #fdba74)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent"
+                }}
+                transition={{
+                  duration: 0.2,
+                  delay: (wordIndex * word.length + index) * 0.05,
+                  ease: "easeInOut"
+                }}
+              >
+                {char}
+              </motion.span>
+              <span className="opacity-0">{char}</span>
+            </motion.span>
+          ))}
+          {wordIndex < text.split(' ').length - 1 && <span className="inline-block w-4" />}
+        </span>
       ))}
     </motion.div>
   )
