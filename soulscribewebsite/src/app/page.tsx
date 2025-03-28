@@ -78,10 +78,10 @@ export default function LandingPage() {
             </span>
           </div>
           <nav className="hidden md:block" role="navigation" aria-label="Main navigation">
-              <ul className="flex space-x-8">
-                <li><a href="#features" className="text-orange-200/70 hover:text-orange-300 transition-colors">Why It's Different</a></li>
-                <li><a href="#download" className="text-orange-200/70 hover:text-orange-300 transition-colors">Get Started</a></li>
-                <li><a href="/contact" className="text-orange-200/70 hover:text-orange-300 transition-colors">Connect</a></li>
+            <ul className="flex space-x-8">
+              <li><a href="#features" className="text-orange-200/70 hover:text-orange-300 transition-colors">Why It's Different</a></li>
+              <li><a href="#download" className="text-orange-200/70 hover:text-orange-300 transition-colors">Get Started</a></li>
+              <li><a href="/newsletter" className="text-orange-200/70 hover:text-orange-300 transition-colors">Newsletter</a></li>
             </ul>
           </nav>
         </div>
@@ -117,7 +117,7 @@ export default function LandingPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link href="https://apps.apple.com/app/soulscribe" target="_blank" rel="noopener noreferrer">
+                <Link href="https://apps.apple.com/us/app/soulscribe%C2%BA/id6741093801" target="_blank" rel="noopener noreferrer">
                   <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-400 text-white hover:from-orange-600 hover:to-orange-500 border-0 shadow-lg shadow-orange-500/20">
                     <Store className="mr-2 h-5 w-5" />
                     Download on App Store
@@ -244,7 +244,7 @@ export default function LandingPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link href="https://apps.apple.com/app/soulscribe" target="_blank" rel="noopener noreferrer">
+                <Link href="https://apps.apple.com/us/app/soulscribe%C2%BA/id6741093801" target="_blank" rel="noopener noreferrer">
                   <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-400 text-white hover:from-orange-600 hover:to-orange-500 border-0 shadow-lg shadow-orange-500/20">
                     <Store className="mr-2 h-5 w-5" />
                     Get it on App Store
@@ -264,7 +264,7 @@ export default function LandingPage() {
               <ul className="flex justify-center space-x-6">
                 <li><a href="/privacy" className="text-orange-200/70 hover:text-orange-300 transition-colors">Privacy</a></li>
                 <li><a href="/terms" className="text-orange-200/70 hover:text-orange-300 transition-colors">Terms</a></li>
-                <li><a href="/contact" className="text-orange-200/70 hover:text-orange-300 transition-colors">Connect</a></li>
+                <li><a href="/newsletter" className="text-orange-200/70 hover:text-orange-300 transition-colors">Newsletter</a></li>
             </ul>
           </nav>
           </div>
