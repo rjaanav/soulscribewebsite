@@ -7,6 +7,63 @@ import { ArrowRight, Download, Sparkles, BookOpen, Heart, Share2, Star, Zap, Loc
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 
+const ChalkText = ({ text, className }: { text: string, className: string }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className={className}
+    >
+      {text.split('').map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ 
+            opacity: 0,
+            pathLength: 0,
+            pathOffset: 1
+          }}
+          animate={{ 
+            opacity: 1,
+            pathLength: 1,
+            pathOffset: 0
+          }}
+          transition={{
+            duration: 0.2,
+            delay: index * 0.05,
+            ease: "easeInOut"
+          }}
+          className="inline-block relative"
+        >
+          <motion.span
+            className="absolute inset-0"
+            initial={{ 
+              background: "linear-gradient(to right, #ffffff, #fed7aa, #fdba74)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              opacity: 0
+            }}
+            animate={{ 
+              opacity: 1,
+              background: "linear-gradient(to right, #ffffff, #fed7aa, #fdba74)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent"
+            }}
+            transition={{
+              duration: 0.2,
+              delay: index * 0.05,
+              ease: "easeInOut"
+            }}
+          >
+            {char}
+          </motion.span>
+          <span className="opacity-0">{char}</span>
+        </motion.span>
+      ))}
+    </motion.div>
+  )
+}
+
 export default function LandingPage() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -21,34 +78,66 @@ export default function LandingPage() {
     <div ref={containerRef} className="min-h-screen bg-black text-white overflow-hidden">
       {/* Animated gradient background */}
       <div className="fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-950/50 via-orange-900/30 to-orange-800/20 animate-gradient-shift" />
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full rotate-12 bg-gradient-to-br from-orange-500/30 to-orange-400/20 blur-3xl animate-pulse" />
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full -rotate-12 bg-gradient-to-br from-orange-400/30 to-orange-300/20 blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-400/20 rounded-full blur-3xl animate-float-delayed" />
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-950/50 via-orange-900/30 to-orange-800/20" />
+        <motion.div 
+          className="absolute -top-1/2 -left-1/2 w-[150%] h-[150%] rotate-12 bg-gradient-to-br from-orange-500/30 to-orange-400/20 blur-2xl"
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.3, 0.6, 0.3],
+            rotate: [12, 20, 12]
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            "@media (min-width: 768px)": {
+              duration: 6
+            }
+          }}
+        />
+        <motion.div 
+          className="absolute -bottom-1/2 -right-1/2 w-[150%] h-[150%] -rotate-12 bg-gradient-to-br from-orange-400/30 to-orange-300/20 blur-2xl"
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.3, 0.7, 0.3],
+            rotate: [-12, -20, -12]
+          }}
+          transition={{
+            duration: 16,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+            "@media (min-width: 768px)": {
+              duration: 8
+            }
+          }}
+        />
       </div>
 
       {/* Animated shapes */}
       <div className="fixed inset-0 -z-5 overflow-hidden">
-        {[...Array(25)].map((_, i) => (
+        {[...Array(30)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-3 h-3 bg-orange-400/30 rounded-full"
+            className="absolute w-4 h-4 bg-orange-400/30 rounded-full"
             style={{
               left: `${(i * 4) % 100}%`,
-              top: `${(i * 3) % 100}%`,
+              top: `${(i * 6) % 100}%`,
             }}
             animate={{
-              y: [0, -150, 0],
-              x: [0, (i % 2 ? 50 : -50), 0],
-              opacity: [0.3, 0.6, 0.3],
-              scale: [1, 1.8, 1],
+              y: [0, -200, 0],
+              opacity: [0.3, 0.8, 0.3],
+              scale: [1, 2.5, 1],
+              rotate: [0, 180, 360],
             }}
             transition={{
-              duration: 4 + (i % 3),
+              duration: 6 + (i % 4),
               repeat: Infinity,
-              delay: i * 0.15,
+              delay: i * 0.2,
               ease: "easeInOut",
+              "@media (min-width: 768px)": {
+                duration: 3 + (i % 4)
+              }
             }}
           />
         ))}
@@ -60,9 +149,37 @@ export default function LandingPage() {
         className="fixed inset-0 -z-3 overflow-hidden"
       >
         <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-orange-400/15 rounded-full blur-3xl animate-pulse delay-1000" />
-          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-orange-300/15 rounded-full blur-3xl animate-pulse delay-500" />
+          <motion.div 
+            className="absolute top-20 left-20 w-[500px] h-[500px] bg-orange-500/20 rounded-full blur-2xl"
+            animate={{
+              scale: [1, 1.4, 1],
+              opacity: [0.2, 0.4, 0.2],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              "@media (min-width: 768px)": {
+                duration: 5
+              }
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-orange-400/20 rounded-full blur-2xl"
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.2, 0.45, 0.2],
+            }}
+            transition={{
+              duration: 14,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+              "@media (min-width: 768px)": {
+                duration: 7
+              }
+            }}
+          />
         </div>
       </motion.div>
 
@@ -78,7 +195,12 @@ export default function LandingPage() {
                 priority
               />
             </div>
-            <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-orange-300">
+            <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-orange-300 md:block hidden font-['Neulis']">
+              SoulScribe
+            </span>
+          </div>
+          <div className="absolute left-[55%] transform -translate-x-1/2 md:hidden w-full text-center">
+            <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-orange-300 font-['Neulis']">
               SoulScribe
             </span>
           </div>
@@ -94,7 +216,7 @@ export default function LandingPage() {
 
       <main id="main-content" role="main" className="relative">
         {/* Hero Section */}
-        <section className="container mx-auto px-4 py-20 text-center relative">
+        <section className="container mx-auto px-4 py-12 sm:py-20 text-center relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -102,18 +224,39 @@ export default function LandingPage() {
             className="relative z-10"
           >
             <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mb-2 sm:mb-4 hidden md:block"
+            >
+              <span className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-orange-300 font-['Neulis']">
+                SoulScribe
+              </span>
+            </motion.div>
+            <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block mb-6"
+              transition={{ delay: 0.4 }}
+              className="inline-block mb-4 sm:mb-6"
             >
               <span className="px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-300 text-sm">
                 ✨ AI Journaling & Note Taking ✨
               </span>
             </motion.div>
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-orange-300 to-orange-200">
-              Your Thoughts,<br />Your Voice,<br />Your Story
-            </h1>
+            <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight sm:leading-relaxed">
+              <ChalkText 
+                text="Your Thoughts" 
+                className="bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-200 to-orange-300 block py-0.5 sm:py-2"
+              />
+              <ChalkText 
+                text="Your Voice" 
+                className="bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-200 to-orange-300 block py-0.5 sm:py-2"
+              />
+              <ChalkText 
+                text="Your Story" 
+                className="bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-200 to-orange-300 block py-0.5 sm:py-2"
+              />
+            </div>
             <p className="text-xl text-orange-200/70 mb-8 max-w-2xl mx-auto">
               More than just a journal. Your personal space to reflect, grow, and be unapologetically you.
             </p>
@@ -243,7 +386,7 @@ export default function LandingPage() {
                 Ready to Be You?
               </h2>
               <p className="text-xl text-orange-200/70 mb-8">
-                Join thousands of others who've found their voice. Your story deserves to be told.
+                Join thousands of others who've found their voice. Your story deserves to be remembered.
               </p>
               <motion.div
                 whileHover={{ scale: 1.05 }}
